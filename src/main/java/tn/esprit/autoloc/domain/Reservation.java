@@ -1,7 +1,10 @@
 package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -26,4 +29,15 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutReservation statut;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_vehicule", nullable = false)
+    private Vehicule vehicule;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_client", nullable = false)
+    private Client client;
+
+    @OneToOne(mappedBy = "reservation")
+    private Contrat contrat;
 }

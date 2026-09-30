@@ -1,9 +1,14 @@
 package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -34,4 +39,7 @@ public class Client {
 
     @Column(nullable = false)
     private LocalDate dateInscription;
+
+    @OneToMany(mappedBy = "client")
+    private Set<Reservation> reservations = new HashSet<>();
 }

@@ -1,10 +1,15 @@
 package tn.esprit.autoloc.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "contrat")
@@ -26,4 +31,11 @@ public class Contrat {
 
     @Column(nullable = false)
     private boolean valide;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_reservation", nullable = false, unique = true)
+    private Reservation reservation;
+
+    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Paiement> paiements = new HashSet<>();
 }
